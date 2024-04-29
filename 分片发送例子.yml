@@ -1,0 +1,17 @@
+name: ppp
+prompts: []
+postprocessing: |-
+  {% assign delimiter1 = "," %}
+  {% assign delimiter2 = "，" %}
+  {% assign delimiter3 = "。" %}
+  {% if message.role == "assistant" %}
+    {% assign array1 = message.content | split: delimiter1 %}
+    {% assign array1 = array1 | join: delimiter2 | split: delimiter2 %}
+    {% assign array1 = array1 | join: delimiter3 | split: delimiter3 %}
+    {% for item in array1 %}
+      {% send item %}
+    {% endfor %}
+  {% else %}
+    {{ message.content }}
+  {% endif %}
+

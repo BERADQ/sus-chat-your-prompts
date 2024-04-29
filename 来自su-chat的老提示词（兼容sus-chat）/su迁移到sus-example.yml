@@ -1,0 +1,14 @@
+# 在 su-chat 我们会把人格名称写成键，但在 sus 中，我们会把人格名称写为键 name 对应的值
+name: 名称
+
+prompts:
+  - role: system
+    content: 这里与 su-chat 中“人格文件”中的内容是一样的
+
+# 这里负责模拟 su-chat 中辅助提示词 [QQ 号,昵称]: 内容 的格式，不需要请删掉下面这部分
+postprocessing: |-
+  {% if message.role == "assistant" %}
+    {{ message.content }}
+  {% else %}
+    [{{session.user.id}},{{session.user.name}}]: {{ message.content }}
+  {% endif %}

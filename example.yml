@@ -1,0 +1,17 @@
+name: example
+
+prompts:
+  - role: system
+    content: 
+  - role: system
+    content: '与你进行对话的人类，昵称为 {{session.user.name}}'
+  - role: system
+    content: |-
+      用户所在时区当前时间为 {{ "now" | date: "%Y-%m-%d %H:%M:%S %z"}}
+
+postprocessing: |-
+  {% if message.role == "assistant" %}
+    <at id="{{session.user.id}}"/>{{ message.content }}喵~
+  {% else %}
+    {{ message.content }}
+  {% endif %}
